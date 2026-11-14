@@ -4,8 +4,8 @@
 // undoes it). Conversations between a student and a teacher are not listed: those are in the
 // teacher's own mailbox. Put it on your class page.
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { ClassOverview, ClassThread } from '../core';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { COUNT_POLL_MS, type ClassOverview, type ClassThread } from '../core';
 import { createClient, type SoshialClient } from '../client';
 import { c, clock, smallButton, srOnly } from './theme';
 
@@ -31,7 +31,23 @@ export function ClassMessages({ classId, client: given, onToast }: ClassMessages
     const r = await client.classOverview(classId);
     if (r.ok) { setData(r.value); setError(null); } else setError(r.error);
   }, [client, classId]);
-  useEffect(() => { void load(); }, [load]);
+  // A teacher may leave the class page open all lesson: refresh every 30 s while the tab is visible, and
+  // when it comes back into view, so new conversations and messages show up (the open one too).
+  const openRef = useRef<string | null>(null);
+  openRef.current = open;
+  useEffect(() => {
+    void load();
+    const refresh = () => {
+      if (document.visibilityState !== 'visible') return;
+      void load();
+      const id = openRef.current;
+      if (!id) return;
+      void client.classThread(classId, id).then((r) => { if (r.ok && openRef.current === id) setThread(r.value); });
+    };
+    const timer = window.setInterval(refresh, COUNT_POLL_MS);
+    document.addEventListener('visibilitychange', refresh);
+    return () => { window.clearInterval(timer); document.removeEventListener('visibilitychange', refresh); };
+  }, [load, client, classId]);
 
   const act = async <T,>(body: Record<string, unknown>, done: (value: T) => string | null): Promise<boolean> => {
     setBusy(true);
