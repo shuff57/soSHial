@@ -1,7 +1,7 @@
 {
   "name": "soshial",
-  "version": "0.1.0",
-  "description": "Small in-app messaging for classrooms: teacher and student, classmate to classmate, with teacher oversight. Cloudflare D1 + React, no extra server.",
+  "version": "0.2.0",
+  "description": "Small in-app messaging for classrooms: teacher and student, classmate to classmate, group chats and class channels, with teacher oversight. Cloudflare D1 + React, no extra server.",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -16,7 +16,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "tsx test/server.test.ts",
+    "test": "tsx test/server.test.ts && tsx test/chat.test.ts",
     "typecheck": "tsc --noEmit",
     "demo": "tsx examples/demo/server.ts",
     "demo:record": "node examples/demo/record.mjs"

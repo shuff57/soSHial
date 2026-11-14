@@ -3,7 +3,7 @@
 
 import { StrictMode, useCallback, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ClassMessages, MailboxButton, createClient, type NotificationTab } from '../../src/react';
+import { ClassMessages, MailboxButton, MessagesPage, createClient, type NotificationTab } from '../../src/react';
 import type { DemoBoot } from './people';
 
 declare global {
@@ -105,6 +105,8 @@ function Lesson() {
 
 function App() {
   const me = boot.people.find((p) => p.id === boot.me) ?? null;
+  // /?view=messages: the full Messages page (<MessagesPage>), linked from the envelope's dropdown.
+  const fullPage = new URLSearchParams(window.location.search).get('view') === 'messages';
   const activityKey = `demo-activity-seen:${boot.me ?? ''}`;
   const [activity, setActivity] = useState(seen(activityKey) ? 0 : 1);
   const markSeen = useCallback(() => { seen(activityKey, true); setActivity(0); }, [activityKey]);
@@ -119,11 +121,13 @@ function App() {
         <YouAre />
         <div className="spacer" />
         {me && <span className="who">{me.label.replace(/ \(.*\)$/, '')}</span>}
-        <MailboxButton client={client} tabs={tabs} />
+        <MailboxButton client={client} tabs={tabs} fullPageHref="/?view=messages" />
       </header>
       <main>
         {!me && <p>Pick who you are above.</p>}
-        {me?.role === 'teacher' ? <ClassPage /> : me ? <Lesson /> : null}
+        {me && fullPage
+          ? <><p><a href="/">Back to the class</a></p><MessagesPage client={client} /></>
+          : me?.role === 'teacher' ? <ClassPage /> : me ? <Lesson /> : null}
       </main>
     </>
   );

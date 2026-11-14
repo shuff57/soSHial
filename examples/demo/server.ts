@@ -20,7 +20,7 @@ const PORT = Number(process.env.PORT) || 4400;
 // ---- the database: node:sqlite behind the part of D1's API soSHial uses ----------------------------
 
 const sqlite = new DatabaseSync(':memory:');
-for (const f of ['migrations/0001_soshial.sql', 'examples/schema.sql']) sqlite.exec(readFileSync(root(f), 'utf8'));
+for (const f of ['migrations/0001_soshial.sql', 'migrations/0002_groups_channels.sql', 'examples/schema.sql']) sqlite.exec(readFileSync(root(f), 'utf8'));
 
 const db: Db = {
   prepare(sql: string): DbStatement {

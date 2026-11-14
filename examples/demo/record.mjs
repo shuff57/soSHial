@@ -169,7 +169,7 @@ try {
   await until(a.getByTestId('soshial-count').waitFor({ timeout: T }));
   await hold(a, 1000);
   await click(a, a.getByTestId('soshial-button'));
-  await click(a, a.getByTestId('soshial-thread').first());
+  await click(a, a.locator('[data-testid=soshial-thread][data-kind=students]').first());
   await until(a.getByTestId('soshial-message').first().waitFor({ timeout: T }));
   await hold(a, 600);
   await type(a, 'Almost! Jordan\'s code looks like spaghetti lol');
@@ -180,7 +180,7 @@ try {
   // 4. Sam tries to share a phone number.
   caption('A message with a phone number is refused, in plain words.');
   await click(s, s.getByRole('button', { name: 'Back to all messages' }));
-  await click(s, s.getByTestId('soshial-thread').first());
+  await click(s, s.locator('[data-testid=soshial-thread][data-kind=students]').first());
   await until(s.getByTestId('soshial-message').nth(1).waitFor({ timeout: T }));
   await hold(s, 700);
   await type(s, 'Want to work on it tonight? Text me at 555-201-3344');
@@ -201,15 +201,16 @@ try {
   await hold(t, 1800);
 
   // 6. ...and turns messages between classmates off for the class.
-  caption('She turns off messages between classmates for the class.');
-  await click(t, t.getByTestId('soshial-switch'));
-  await until(t.getByText('Messages between classmates are off').waitFor({ timeout: T }));
+  caption('She sets messages in the class to Teacher only.');
+  await click(t, t.getByTestId('soshial-level'));
+  await t.getByTestId('soshial-level').selectOption('1');
+  await until(t.getByText('Student messages in this class: Teacher only').waitFor({ timeout: T }));
   await hold(t, 1500);
 
   // 7. Sam sees both.
-  caption('Sam sees "Removed by a teacher" and that classmate messages are off.');
+  caption('Sam sees "Removed by a teacher", and that the class is set to teacher only.');
   await click(s, s.getByRole('button', { name: 'Back to all messages' }));
-  await click(s, s.getByTestId('soshial-thread').first());
+  await click(s, s.locator('[data-testid=soshial-thread][data-kind=students]').first());
   await until(s.getByTestId('soshial-closed').waitFor({ timeout: T }));
   await until(s.getByText('Removed by a teacher').first().waitFor({ timeout: T }));
   await hold(s, 4200);

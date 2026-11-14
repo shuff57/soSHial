@@ -28,6 +28,8 @@ export interface MailboxButtonProps {
   tabs?: NotificationTab[];
   /** Characters in one message, if you changed the server's `limits.messageMax`. */
   messageMax?: number;
+  /** Where your full Messages page is (<MessagesPage>): the dropdown shows a button to open it. */
+  fullPageHref?: string;
 }
 
 const Envelope = () => (
@@ -37,7 +39,7 @@ const Envelope = () => (
   </svg>
 );
 
-export function MailboxButton({ client: given, tabs = [], messageMax = DEFAULT_LIMITS.messageMax }: MailboxButtonProps) {
+export function MailboxButton({ client: given, tabs = [], messageMax = DEFAULT_LIMITS.messageMax, fullPageHref }: MailboxButtonProps) {
   const client = useMemo(() => given ?? createClient(), [given]);
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState('messages');
@@ -130,7 +132,7 @@ export function MailboxButton({ client: given, tabs = [], messageMax = DEFAULT_L
             </div>
           )}
           {tab === 'messages' || !current
-            ? <Mailbox client={client} active={open} messageMax={messageMax} />
+            ? <Mailbox client={client} active={open} messageMax={messageMax} fullPageHref={fullPageHref} />
             : <div style={{ overflowY: 'auto', flex: 1 }}>{current.render()}</div>}
         </div>
       )}

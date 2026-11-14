@@ -66,6 +66,14 @@ export function createClient(base = '/api/soshial') {
     },
     sendNew(classId: string, to: string, body: string) { return ask<ThreadView>('/messages', post({ classId, to, body })); },
     reply(threadId: string, body: string) { return ask<ThreadView>(`/messages/${encodeURIComponent(threadId)}`, post({ body })); },
+    /** A group of 2-8 people of one class (0.2.0). `people` are public keys. */
+    createGroup(classId: string, people: string[], title = '') { return ask<ThreadView>('/messages', post({ classId, create: 'group', people, title })); },
+    /** A channel for the whole class (0.2.0). */
+    createChannel(classId: string, name: string) { return ask<ThreadView>('/messages', post({ classId, create: 'channel', name })); },
+    /** Rename, add people, leave, lock, unlock, delete, remove or restore a message (see server.ts). */
+    manage<T = ThreadView & { left?: boolean; deleted?: boolean }>(threadId: string, action: string, extra: Record<string, unknown> = {}) {
+      return ask<T>(`/messages/${encodeURIComponent(threadId)}`, post({ action, ...extra }));
+    },
 
     // The teacher panel.
     classOverview(classId: string) { return ask<ClassOverview>(`/classes/${encodeURIComponent(classId)}/messages`); },
