@@ -1,0 +1,68 @@
+/* The demo page's look: light, with soSHial's own colours set through its --soshial-* variables. */
+:root {
+  --soshial-bg: #ffffff;
+  --soshial-deep: #f3f4f6;
+  --soshial-deep2: #e5e7eb;
+  --soshial-fg: #111827;
+  --soshial-meta: #374151;
+  --soshial-dim: #4b5563;
+  --soshial-line: #d1d5db;
+  --soshial-accent: #2563eb;
+  --soshial-on-accent: #ffffff;
+  --soshial-link: #1d4ed8;
+  --soshial-teacher: #7c3aed;
+  --soshial-danger: #b91c1c;
+  --soshial-warn: #b45309;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #f5f6f8;
+  color: #111827;
+  font: 15px/1.5 Inter, "Segoe UI", system-ui, -apple-system, "Liberation Sans", Arial, sans-serif;
+}
+.top {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 14px;
+  height: 56px; padding: 0 16px;
+  background: #ffffff; border-bottom: 1px solid #e5e7eb;
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; }
+.logo {
+  display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 7px;
+  background: #2563eb; color: #fff; font-size: 15px;
+}
+.you-are { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #4b5563; }
+.you-are select, .quiet {
+  font: inherit; font-size: 13px; padding: 4px 8px; border-radius: 6px;
+  border: 1px solid #d1d5db; background: #fff; color: #111827;
+}
+.quiet { cursor: pointer; color: #1d4ed8; }
+.spacer { flex: 1; }
+.who { font-size: 13px; color: #374151; }
+main { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; }
+.card {
+  position: relative;
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 18px 20px;
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04);
+}
+.card h2 { margin: 0 0 10px; font-size: 18px; }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+.card-head h2 { margin: 0; }
+.lede { margin: 0 0 10px; }
+.steps { margin: 0 0 12px; padding-left: 22px; color: #374151; }
+.hint { margin: 0; font-size: 13px; color: #4b5563; }
+code { font-size: 13px; background: #f3f4f6; padding: 1px 5px; border-radius: 4px; }
+.activity { list-style: none; margin: 0; padding: 0; }
+.activity li { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid #e5e7eb; }
+.activity li span { display: block; margin-top: 3px; color: #4b5563; font-size: 12px; }
+.toast {
+  position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 9px 14px; border-radius: 8px; font-size: 13px;
+  background: #111827; color: #fff; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+.toast.error { background: #b91c1c; }
+/* soSHial's panel shadow is tuned for its dark default; soften it on a light page. */
+[data-testid="soshial-panel"] { box-shadow: 0 12px 32px rgba(17, 24, 39, 0.16) !important; }

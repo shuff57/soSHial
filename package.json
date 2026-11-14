@@ -9,23 +9,37 @@
     "./react": "./src/react/index.ts",
     "./migrations/*": "./migrations/*"
   },
-  "files": ["src", "migrations", "README.md", "LICENSE"],
+  "files": [
+    "src",
+    "migrations",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "tsx test/server.test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "demo": "tsx examples/demo/server.ts",
+    "demo:record": "node examples/demo/record.mjs"
   },
   "peerDependencies": {
     "react": ">=18"
   },
   "peerDependenciesMeta": {
-    "react": { "optional": true }
+    "react": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
     "react": "^19.0.0",
+    "react-dom": "^19.3.1",
     "tsx": "^4.19.0",
     "typescript": "^5.6.0"
   },
-  "engines": { "node": ">=22.5" }
+  "engines": {
+    "node": ">=22.5"
+  }
 }

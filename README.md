@@ -5,6 +5,10 @@ classmates message each other, with the teacher able to read, remove and switch 
 your own app on Cloudflare D1 (or anything D1-shaped), with React components for the page. There is no
 chat server, no container and no outside service.
 
+[![Two students and their teacher using soSHial side by side: a message between classmates, a phone number refused, a message removed by the teacher and classmate messages switched off](docs/demo.jpg)](docs/demo.mp4)
+
+*Watch the 38-second demo: [docs/demo.mp4](docs/demo.mp4). Try it yourself with `npm run demo` ([below](#try-it)).*
+
 - **Teacher and student, both ways.** A teacher writes to a student; the student replies.
 - **Classmate to classmate.** Two students in the same class can message each other.
 - **Teachers can see.** A class's teachers read every conversation between two of its students, and
@@ -23,6 +27,28 @@ chat server, no container and no outside service.
 
 It polls (every 30 s for the count, every 10 s in an open conversation) rather than holding a socket open,
 so it needs nothing but your existing Functions and database.
+
+## Try it
+
+```bash
+npm install
+npm run demo      # http://localhost:4400
+```
+
+One process with an in-memory database and a made-up class, Period 3: Ms Rivera (teacher) and Sam,
+Alex and Jordan (students). Use **You are** at the top to switch person, or open two browsers (a normal and
+a private window) to be two people at once.
+
+1. As **Sam**, press the envelope, then **New message**, pick **Alex B.** and send something.
+2. As **Alex**, the envelope shows a count. Open the conversation and reply.
+3. As **Sam**, try sending a phone number (`555-201-3344`): it is refused in plain words.
+4. As **Ms Rivera**, the class page lists the conversation. **Read** it, **Remove** a message, and untick
+   **Students can message classmates in this class**.
+5. Back as **Sam**, the message reads *Removed by a teacher* and the conversation says messages between
+   classmates are off.
+
+The demo signs you in as whoever the picker names. That is for the demo only: a real app takes the user id
+from its own sign-in. `npm run demo:record` re-records the video above (see `examples/demo/record.mjs`).
 
 ## How it fits together
 
