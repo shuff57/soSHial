@@ -177,6 +177,39 @@ try {
   await until(a.getByTestId('soshial-message').nth(1).waitFor({ timeout: T }));
   await hold(a, 900);
 
+  // 3b. Channels: every class has #general, and anyone can add one.
+  caption('Every class has channels, and anyone can add one.');
+  await click(s, s.getByRole('button', { name: 'Back to all messages' }));
+  await click(s, s.getByTestId('soshial-new-channel'));
+  await s.getByTestId('soshial-channel-name').pressSequentially('Loop help', { delay: 45 });
+  await click(s, s.getByTestId('soshial-channel-create'));
+  await until(s.getByTestId('soshial-title').filter({ hasText: '#loop-help' }).waitFor({ timeout: T }));
+  await type(s, 'How do I space the circles out?');
+  await click(s, s.getByTestId('soshial-send'));
+  await until(s.getByTestId('soshial-message').first().waitFor({ timeout: T }));
+  await hold(s, 900);
+
+  // 3c. Group chats, and the full Messages page.
+  caption('Group chats too, and a full Messages page.');
+  await click(s, s.getByRole('button', { name: 'Back to all messages' }));
+  await click(s, s.getByTestId('soshial-new-group'));
+  await s.getByTestId('soshial-group-title').pressSequentially('Circle crew', { delay: 45 });
+  await click(s, s.locator('label').filter({ hasText: /Alex/ }).getByTestId('soshial-group-person'));
+  await click(s, s.getByTestId('soshial-group-create'));
+  await until(s.getByTestId('soshial-title').filter({ hasText: 'Circle crew' }).waitFor({ timeout: T }));
+  await type(s, 'Want to split the loops lab?');
+  await click(s, s.getByTestId('soshial-send'));
+  await until(s.getByTestId('soshial-message').first().waitFor({ timeout: T }));
+  await until(a.goto(`${BASE}/?view=messages`, { timeout: T }));
+  await until(a.getByTestId('soshial-page').waitFor({ timeout: T }));
+  await a.mouse.move(W / 2, H - 120);
+  await click(a, a.locator('[data-testid=soshial-thread][data-kind=channel]').filter({ hasText: 'loop-help' }));
+  await until(a.getByTestId('soshial-message').filter({ hasText: 'space the circles' }).waitFor({ timeout: T }));
+  await type(a, 'Add i * 30 to x each time round.');
+  await click(a, a.getByTestId('soshial-send'));
+  await until(a.getByTestId('soshial-message').filter({ hasText: 'i * 30' }).waitFor({ timeout: T }));
+  await hold(a, 1200);
+
   // 4. Sam tries to share a phone number.
   caption('A message with a phone number is refused, in plain words.');
   await click(s, s.getByRole('button', { name: 'Back to all messages' }));
@@ -191,7 +224,7 @@ try {
   // 5. The teacher reads the conversation and removes a message.
   caption('Ms Rivera reads conversations between students and removes a message.');
   await click(t, t.getByTestId('demo-refresh'));
-  const row = t.getByTestId('soshial-class-thread').first();
+  const row = t.getByTestId('soshial-class-thread').filter({ hasText: 'spaghetti' }).first();
   await click(t, row.getByRole('button', { name: 'Read' }));
   const unkind = t.locator('li').filter({ hasText: 'spaghetti' });
   await until(unkind.waitFor({ timeout: T }));
@@ -262,7 +295,7 @@ captions.forEach((c, i) => {
   graph += `,drawtext=${fontOpt}textfile='${f}':fontcolor=white:fontsize=24:x=(w-text_w)/2:y=h-${CAPTION_H}+(${CAPTION_H}-text_h)/2:enable='between(t,${from.toFixed(2)},${to.toFixed(2)})'`;
 });
 // A busy machine stretches the clicks and the typing; play it back fast enough to fit in TARGET seconds.
-const TARGET = 38;
+const TARGET = 55;
 const speed = Math.max(1, mapT(end) / TARGET);
 if (speed > 1.001) graph += `,setpts=PTS/${speed.toFixed(4)},fps=25`;
 graph += '[out]';

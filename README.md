@@ -6,9 +6,9 @@ read, remove and turn it down or off. It runs inside
 your own app on Cloudflare D1 (or anything D1-shaped), with React components for the page. There is no
 chat server, no container and no outside service.
 
-[![Two students and their teacher using soSHial side by side: a message between classmates, a phone number refused, a message removed by the teacher and the class set to Teacher only](docs/demo.jpg)](docs/demo.mp4)
+[![Two students and their teacher using soSHial side by side: a message between classmates, a new channel and a group chat, the full Messages page, a phone number refused, a message removed by the teacher and the class set to Teacher only](docs/demo.jpg)](docs/demo.mp4)
 
-*Watch the 38-second demo: [docs/demo.mp4](docs/demo.mp4). Try it yourself with `npm run demo` ([below](#try-it)).*
+*Watch the 55-second demo: [docs/demo.mp4](docs/demo.mp4). Try it yourself with `npm run demo` ([below](#try-it)).*
 
 - **Teacher and student, both ways.** A teacher writes to a student; the student replies.
 - **Classmate to classmate.** Two students in the same class can message each other.
